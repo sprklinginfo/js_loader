@@ -1,0 +1,10 @@
+name = JS libraries loader
+description =  Load some third party JS libraries as required by some members. The library must be installed under sites/all/libraries.
+core = 7.x
+package = UTSCLib Custom
+files[] = js_loader.module
+dependencies[] = libraries
+configure = admin/config/development/js_loader
+
+version = "7.x-1.0"
+core = "7.x"

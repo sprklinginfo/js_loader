@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for this module.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * @see islandora_islandora_required_objects()
+ */
+function js_loader_install() {
+	$t = get_t();
+	if (!module_exists('libraries')) {
+		drupal_set_message($t('Libraries module is required.'), 'warning');
+	}
+	variable_set('js_loader_library', '');
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function js_loader_uninstall() {
+  $vars = array(
+    'js_loader_library',
+  );
+  array_map('variable_del', $vars);
+}
+
