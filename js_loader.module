@@ -45,6 +45,7 @@ function js_loader_admin($form, &$form_state) {
       'flot' => t('Flot'),
       ),
     '#required' => TRUE,
+    '#default_value' => variable_get('js_loader_library', ''),
     '#description' => t('JS library to be loaded, must be already installed in sites/all/libraries.'),
   );
 
