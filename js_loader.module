@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Implements hook_menu().
  *
@@ -64,18 +63,6 @@ function js_loader_preprocess_html(&$variables) {
   }
 }
 
-/**
- * Implemets hook_init().
- */
-/*function js_loader_init() {
-  $lib = variable_get('js_loader_library', 'flot');
-  if (isset($lib)) {
-     js_loader_add_js($lib);
-  } else {
-    drupal_set_message(t('The js library must be configured.'), 'error');
-  }
-
-}*/
 
 /**
  * Load JS libraries.
