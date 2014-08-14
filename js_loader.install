@@ -15,7 +15,7 @@ function js_loader_install() {
 	if (!module_exists('libraries')) {
 		drupal_set_message($t('Libraries module is required.'), 'warning');
 	}
-	variable_set('js_loader_library', '');
+	variable_set('js_loader_library', 'flot');
 
 }
 

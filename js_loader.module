@@ -45,26 +45,37 @@ function js_loader_admin($form, &$form_state) {
       'flot' => t('Flot'),
       ),
     '#required' => TRUE,
-    '#default_value' => variable_get('js_loader_library', ''),
+    '#default_value' => variable_get('js_loader_library', 'flot'),
     '#description' => t('JS library to be loaded, must be already installed in sites/all/libraries.'),
   );
 
    return system_settings_form($form);
 }
 
+/**
+ * Implments hook_preprocess_HOOK().
+ */
+function js_loader_preprocess_html(&$variables) {
+  $lib = variable_get('js_loader_library', 'flot');
+  if (isset($lib)) {
+     js_loader_add_js($lib);
+  } else {
+    drupal_set_message(t('The js library must be configured.'), 'error');
+  }
+}
 
 /**
  * Implemets hook_init().
  */
-function js_loader_init() {
-  $lib = variable_get('js_loader_library', '');
+/*function js_loader_init() {
+  $lib = variable_get('js_loader_library', 'flot');
   if (isset($lib)) {
      js_loader_add_js($lib);
   } else {
     drupal_set_message(t('The js library must be configured.'), 'error');
   }
 
-}
+}*/
 
 /**
  * Load JS libraries.
@@ -72,6 +83,7 @@ function js_loader_init() {
 function js_loader_add_js($lib = 'flot') {
 
   $path = _js_loader_get_library_path($lib);
+
   $ie_support_tag = <<<EOL
   <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="{$path}/excanvas.min.js"></script><![endif]-->
 EOL;
@@ -79,16 +91,17 @@ EOL;
     $element = array(
     '#type' => 'markup',
     '#markup' => $ie_support_tag,
-  );
-  drupal_add_html_head($element, $lib);
-  switch ($lib) {
-    case 'flot' :
-      $js_file = '/jquery.flot.js';
-      break;
-  }
-  drupal_add_js($path . $js_file);
+    );
+    drupal_add_html_head($element, $lib);
+    switch ($lib) {
+      case 'flot' :
+        $js_file = '/jquery.flot.js';
+        break;
+    }
+    drupal_add_js($path . $js_file);
+
   } else {
-    drupal_set_message(t('Cannot find the library %lib under sites/all/libraries directory', array('%lib' => $lib,)), 'error');
+    drupal_set_message(t('Cannot find the library %l under sites/all/libraries directory', array('%l' => $lib,)), 'error');
   }
 
 }
